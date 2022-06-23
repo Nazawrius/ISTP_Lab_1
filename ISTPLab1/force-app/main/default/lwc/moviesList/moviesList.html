@@ -1,0 +1,90 @@
+<!-- sldsValidatorIgnore -->
+<template>
+    <div class="c-container">
+        <lightning-layout>
+            <lightning-layout-item padding="around-small">
+                <div class="header-column library">
+                    <h1><b>Movies Library</b></h1>
+                </div>
+            </lightning-layout-item>
+            <lightning-layout-item padding="around-small">
+                <div class="header-column">
+                    <p><a href="/lightning/n/Movies">Home</a></p>
+                </div>
+            </lightning-layout-item>
+        </lightning-layout>
+    </div>
+
+    <div class="c-container">
+        <lightning-button variant="neutral" label="New Movie" onclick={handleClick} class="slds-m-left_x-small"></lightning-button>
+    </div>
+
+    <div class="c-container">
+        <h2 class="slds-text-heading_small slds-m-around_medium"><b>List of all Movies</b></h2>
+        <lightning-datatable
+            key-field="id"
+            columns={columns}
+            data={movies.data}
+            hide-checkbox-column
+            onrowaction={handleRowActions}>
+        </lightning-datatable>
+    </div>
+
+    <div class="c-container record">
+    <template if:true={selected}>
+        <template if:true={view}>
+            <lightning-record-view-form
+                record-id={movieId}
+                object-api-name="Movie__c"
+            >
+                <lightning-output-field field-name="Name"></lightning-output-field>
+                <lightning-output-field field-name="Length__c"></lightning-output-field>
+                <lightning-output-field field-name="Release_Date__c"></lightning-output-field>
+                <lightning-output-field field-name="Synopsis__c"></lightning-output-field>
+                <lightning-output-field field-name="Box_Office__c"></lightning-output-field>
+                <lightning-output-field field-name="Budget__c"></lightning-output-field>
+            </lightning-record-view-form>
+        </template>
+        <template if:true={edit}>
+            <lightning-record-edit-form
+                record-id={movieId}
+                object-api-name="Movie__c"
+            >
+                <lightning-input-field field-name="Name"></lightning-input-field>
+                <lightning-input-field field-name="Length__c"></lightning-input-field>
+                <lightning-input-field field-name="Release_Date__c"></lightning-input-field>
+                <lightning-input-field field-name="Synopsis__c"></lightning-input-field>
+                <lightning-input-field field-name="Box_Office__c"></lightning-input-field>
+                <lightning-input-field field-name="Budget__c"></lightning-input-field>
+                <div class="slds-var-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="Save" onclick={handleSave}>
+                    </lightning-button>
+                    <lightning-button variant="neutral" type="submit" label="Cancel" onclick={handleCancel}>
+                    </lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </template>
+        <template if:true={create}>
+            <lightning-record-edit-form
+                object-api-name="Movie__c"
+            >
+                <lightning-input-field field-name="Name"></lightning-input-field>
+                <lightning-input-field field-name="Length__c"></lightning-input-field>
+                <lightning-input-field field-name="Release_Date__c"></lightning-input-field>
+                <lightning-input-field field-name="Synopsis__c"></lightning-input-field>
+                <lightning-input-field field-name="Box_Office__c"></lightning-input-field>
+                <lightning-input-field field-name="Budget__c"></lightning-input-field>
+                <div class="slds-var-m-top_medium">
+                    <lightning-button variant="brand" type="submit" label="Save" onclick={handleSave}>
+                    </lightning-button>
+                    <lightning-button variant="neutral" type="submit" label="Cancel" onclick={handleCancel}>
+                    </lightning-button>
+                </div>
+            </lightning-record-edit-form>
+        </template>
+    </template>
+    <template if:false={selected}>
+        <p class="slds-text-heading_small slds-m-around_small">Select a record</p>
+    </template>
+    </div>
+</template>
